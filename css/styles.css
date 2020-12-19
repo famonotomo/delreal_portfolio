@@ -1,0 +1,203 @@
+html {
+    width: 100%; /* 100% width of parent (root) element */
+    height: 100vh; /* 100% height of viewport */
+    background: #181818;
+    font-size: 1em; /* our root font size */
+    font-family: "Inria Sans", sans-serif;
+    color: #dce0df;
+}
+body {
+    margin: 0; /* content goes to edge of viewport */
+    height: 100vh; /* and spans height of viewport */
+}
+div.container {
+    min-height: 25rem; /* mainbody height never squishes < 25rem */
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: [left] 10rem auto 10rem [right];
+    grid-template-rows: [top] 5rem auto 5rem [bottom];
+    grid-template-areas:
+        "head head head"
+        "panleft mainbody panright"
+        "foot foot foot";
+}
+
+/* HEADER */
+
+div.header {
+    background: #181818;
+    grid-area: head; /* head corresponds to name in template */
+    height: 20vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+figure.logo svg {
+    width: 6.5vh;
+    fill: #dce0df;
+}
+
+figure.logo svg:hover {
+    fill: #fff;
+}
+
+/* MENÚ */
+
+nav {
+    width: 80%;
+    margin: 0 auto;
+    position: relative;
+    padding-top: 50px;
+}
+
+#nav-toggle {
+    background: transparent;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+    transform: translate(0%, -50%);
+}
+
+#nav-toggle span,
+#nav-toggle span:before {
+    cursor: pointer;
+    border-radius: 1px;
+    height: 2px;
+    width: 36px;
+    background: white;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    display: block;
+    content: "";
+}
+
+#nav-toggle span:before {
+    height: 36px;
+    width: 2px;
+    top: -17px;
+    left: 17px;
+}
+
+#nav-toggle span,
+#nav-toggle span:before {
+    transition: all 0.5s ease-in-out;
+}
+
+#nav-toggle.active span {
+    transform: rotate(135deg);
+}
+#nav-toggle ul {
+    list-style: none;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 36px;
+    height: 30px;
+    color: white;
+    float: left;
+    transform: none;
+}
+
+#nav-toggle li {
+    float: left;
+    margin: 0 0 20px 0;
+    font-size: 0;
+}
+
+#nav-toggle.active #ani1 {
+    font-size: 36px;
+    animation: logo-ani1 2s;
+}
+#nav-toggle.active #ani2 {
+    font-size: 36px;
+    animation: logo-ani2 2s;
+}
+#nav-toggle.active #ani3 {
+    font-size: 36px;
+    animation: logo-ani3 2s;
+}
+
+@keyframes logo-ani1 {
+    0% {
+        transform: translate(0, -40px);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(0, 0px);
+        opacity: 1;
+    }
+}
+@keyframes logo-ani2 {
+    0% {
+        transform: translate(0, -40px);
+        opacity: 0;
+    }
+    20% {
+        transform: translate(0, -40px);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(0, 0px);
+        opacity: 1;
+    }
+}
+@keyframes logo-ani3 {
+    0% {
+        transform: translate(0, -40px);
+        opacity: 0;
+    }
+    40% {
+        transform: translate(0, -40px);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(0, 0px);
+        opacity: 1;
+    }
+}
+
+/* FOOTER */
+
+div.footer {
+    background: #181818;
+    grid-area: foot;
+    text-align: center;
+}
+div.panel {
+    /* div elements with "panel" class */
+    background: #181818;
+}
+div.panel.left {
+    /* with both "panel" and "left" class */
+    grid-area: panleft;
+}
+div.panel.right {
+    grid-area: panright;
+}
+div.mainbody {
+    grid-area: mainbody;
+    width: 30rem; /* mainbody width is fixed */
+    justify-self: center; /* and always centered in grid area */
+}
+@media screen and (max-width: 50rem) {
+    /* if viewport width < 50rem */
+    div.panel.left {
+        grid-column-end: left; /* left panel stops at left edge */
+    }
+    div.panel.right {
+        grid-column-start: right; /* right panel starts at right edge */
+    }
+    div.panel {
+        display: none; /* neither panel is displayed */
+    }
+    div.mainbody {
+        grid-column-start: left; /* mainbody starts at left edge */
+        grid-column-end: right; /* mainbody ends at right edge */
+    }
+}
